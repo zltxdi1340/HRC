@@ -1,0 +1,35 @@
+# 训练日志、运行结果（绝对不能上传）
+runs*/
+*.zip
+*.ckpt
+*.pt
+*.pth
+*.pkl
+*.h5
+*.tfevents
+*.log
+*.out
+*.bin
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+*.py~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 虚拟环境
+env/
+venv/
+envs/
+.anaconda
+conda_env/
+
+# 数据集、大文件
+data/
+dataset/
+*.tar
+*.gz

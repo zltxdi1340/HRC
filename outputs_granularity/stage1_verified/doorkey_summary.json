@@ -1,0 +1,50 @@
+{
+  "env_id": "MiniGrid-DoorKey-6x6-v0",
+  "mission": "use the key to open the door and then get to the goal",
+  "ACTIVE": [
+    "near_key",
+    "has_key",
+    "opened_door",
+    "at_goal",
+    "task_success"
+  ],
+  "parents_hat": {
+    "at_goal": [
+      "opened_door"
+    ],
+    "task_success": [
+      "at_goal"
+    ],
+    "has_key": [
+      "near_key"
+    ],
+    "opened_door": [
+      "has_key"
+    ]
+  },
+  "H_edges": [
+    [
+      "at_goal",
+      "task_success"
+    ],
+    [
+      "has_key",
+      "opened_door"
+    ],
+    [
+      "near_key",
+      "has_key"
+    ],
+    [
+      "opened_door",
+      "at_goal"
+    ]
+  ],
+  "levels": {
+    "near_key": 0,
+    "has_key": 1,
+    "opened_door": 2,
+    "at_goal": 3,
+    "task_success": 4
+  }
+}

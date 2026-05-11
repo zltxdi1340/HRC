@@ -1,0 +1,32 @@
+{
+  "env_id": "MiniGrid-Fetch-8x8-N3-v0",
+  "mission": "fetch a grey ball",
+  "ACTIVE": [
+    "near_target",
+    "has_target",
+    "task_success"
+  ],
+  "parents_hat": {
+    "has_target": [
+      "near_target"
+    ],
+    "task_success": [
+      "has_target"
+    ]
+  },
+  "H_edges": [
+    [
+      "has_target",
+      "task_success"
+    ],
+    [
+      "near_target",
+      "has_target"
+    ]
+  ],
+  "levels": {
+    "near_target": 0,
+    "has_target": 1,
+    "task_success": 2
+  }
+}

@@ -1,0 +1,3 @@
+config,method,granularity,c_build,zero_shot_success,zero_shot_avg_steps,c_adapt_at_conv,c_total_at_conv,converged_success,converged_avg_steps,conv_reason
+B_seq_G1_L420,B_sequential_cost_adapt,G1,420000,0.7,46.333333333333336,35000,455000,0.98,29.25,success_ge_0.95
+B_seq_G2_L245,B_sequential_cost_adapt,G2,245000,0.71,44.48,140000,385000,0.98,16.61,success_ge_0.95

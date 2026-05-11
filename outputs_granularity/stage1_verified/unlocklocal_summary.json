@@ -1,0 +1,41 @@
+{
+  "env_id": "BabyAI-UnlockLocal-v0",
+  "mission": "open the door",
+  "ACTIVE": [
+    "near_key",
+    "has_key",
+    "opened_door",
+    "task_success"
+  ],
+  "parents_hat": {
+    "has_key": [
+      "near_key"
+    ],
+    "task_success": [
+      "opened_door"
+    ],
+    "opened_door": [
+      "has_key"
+    ]
+  },
+  "H_edges": [
+    [
+      "has_key",
+      "opened_door"
+    ],
+    [
+      "near_key",
+      "has_key"
+    ],
+    [
+      "opened_door",
+      "task_success"
+    ]
+  ],
+  "levels": {
+    "near_key": 0,
+    "has_key": 1,
+    "opened_door": 2,
+    "task_success": 3
+  }
+}

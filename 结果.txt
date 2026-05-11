@@ -1,0 +1,285 @@
+(D:\anaconda\envs_dirs\causal_hrl) PS D:\Project\HRC_granularity> python -m rl.train_sb3_gc_ppo --env_id MiniGrid-Fetch-8x8-N3-v0 --goals has_target --total_timesteps 512 --n_envs 1 --seed 0 --logdir runs_granularity --run_name smoke_g0_fetch --no_precondition_do
+D:\anaconda\envs_dirs\causal_hrl\lib\site-packages\pygame\pkgdata.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_stream, resource_exists
+TRAINING_MODE: goal
+GOALS: ['has_target']
+USE_PRECONDITION_DO: False
+[ckpt] every ~10000 calls (~10000 timesteps)
+Using cpu device
+D:\anaconda\envs_dirs\causal_hrl\lib\site-packages\stable_baselines3\ppo\ppo.py:155: UserWarning: You have specified a mini-batch size of 1024, but because the `RolloutBuffer` is of size `n_steps * n_envs = 256`, after every 0 untruncated mini-batches, there will be a truncated mini-batch of size 256
+We recommend using a `batch_size` that is a factor of `n_steps * n_envs`.
+Info: (n_steps=256 and n_envs=1)
+  warnings.warn(
+Logging to runs_granularity\smoke_g0_fetch\smoke_g0_fetch_1
+-------------------------------------------------
+| debug/                             |          |
+|    front_door_e                    | 0        |
+|    front_door_s                    | 0        |
+|    front_door_w                    | 0        |
+|    front_step_e                    | 0        |
+|    front_step_s                    | 0        |
+|    front_step_w                    | 0        |
+|    front_tgt_e                     | 0        |
+|    front_tgt_s                     | 0        |
+|    front_tgt_w                     | 0.25     |
+|    pickup_any_e                    | 1        |
+|    pickup_any_s                    | 1        |
+|    pickup_any_w                    | 1        |
+|    pickup_cnt_e                    | 14       |
+|    pickup_cnt_s                    | 14       |
+|    pickup_cnt_w                    | 4.75     |
+|    pickup_front_e                  | 0        |
+|    pickup_front_s                  | 0        |
+|    pickup_front_w                  | 0.25     |
+|    seen_door_e                     | 0        |
+|    seen_door_s                     | 0        |
+|    seen_door_w                     | 0        |
+|    seen_step_e                     | 0        |
+|    seen_step_s                     | 0        |
+|    seen_step_w                     | 0        |
+|    seen_tgt_e                      | 1        |
+|    seen_tgt_s                      | 1        |
+|    seen_tgt_w                      | 0.75     |
+|    toggle_any_e                    | 1        |
+|    toggle_any_s                    | 1        |
+|    toggle_any_w                    | 0.75     |
+|    toggle_cnt_e                    | 22       |
+|    toggle_cnt_s                    | 8        |
+|    toggle_cnt_w                    | 6        |
+|    toggle_front_e                  | 0        |
+|    toggle_front_s                  | 0        |
+|    toggle_front_w                  | 0        |
+| diag/                              |          |
+|    has_target/ever_target_front    | 0.25     |
+|    has_target/ever_target_seen     | 0.75     |
+|    has_target/pickup_attempt_count | 4.75     |
+|    has_target/pickup_attempt_front | 0.25     |
+|    has_target/pickup_attempted     | 1        |
+| goal_success/                      |          |
+|    has_target                      | 0.75     |
+| rollout/                           |          |
+|    ep_len_mean                     | 39.5     |
+|    ep_rew_mean                     | 0.75     |
+|    success_rate                    | 0.75     |
+| time/                              |          |
+|    fps                             | 329      |
+|    iterations                      | 1        |
+|    time_elapsed                    | 0        |
+|    total_timesteps                 | 256      |
+-------------------------------------------------
+----------------------------------------------------
+| debug/                             |             |
+|    front_door_e                    | 0           |
+|    front_door_s                    | 0           |
+|    front_door_w                    | 0           |
+|    front_step_e                    | 0           |
+|    front_step_s                    | 0           |
+|    front_step_w                    | 0           |
+|    front_tgt_e                     | 1           |
+|    front_tgt_s                     | 0           |
+|    front_tgt_w                     | 0.25        |
+|    pickup_any_e                    | 1           |
+|    pickup_any_s                    | 1           |
+|    pickup_any_w                    | 1           |
+|    pickup_cnt_e                    | 13          |
+|    pickup_cnt_s                    | 5           |
+|    pickup_cnt_w                    | 9.38        |
+|    pickup_front_e                  | 1           |
+|    pickup_front_s                  | 0           |
+|    pickup_front_w                  | 0.25        |
+|    seen_door_e                     | 0           |
+|    seen_door_s                     | 0           |
+|    seen_door_w                     | 0           |
+|    seen_step_e                     | 0           |
+|    seen_step_s                     | 0           |
+|    seen_step_w                     | 0           |
+|    seen_tgt_e                      | 1           |
+|    seen_tgt_s                      | 1           |
+|    seen_tgt_w                      | 0.875       |
+|    toggle_any_e                    | 1           |
+|    toggle_any_s                    | 1           |
+|    toggle_any_w                    | 0.875       |
+|    toggle_cnt_e                    | 7           |
+|    toggle_cnt_s                    | 2           |
+|    toggle_cnt_w                    | 8.12        |
+|    toggle_front_e                  | 0           |
+|    toggle_front_s                  | 0           |
+|    toggle_front_w                  | 0           |
+| diag/                              |             |
+|    has_target/ever_target_front    | 0.25        |
+|    has_target/ever_target_seen     | 0.875       |
+|    has_target/pickup_attempt_count | 9.38        |
+|    has_target/pickup_attempt_front | 0.25        |
+|    has_target/pickup_attempted     | 1           |
+| goal_success/                      |             |
+|    has_target                      | 0.375       |
+| rollout/                           |             |
+|    ep_len_mean                     | 60.4        |
+|    ep_rew_mean                     | 0.375       |
+|    success_rate                    | 0.375       |
+| time/                              |             |
+|    fps                             | 287         |
+|    iterations                      | 2           |
+|    time_elapsed                    | 1           |
+|    total_timesteps                 | 512         |
+| train/                             |             |
+|    approx_kl                       | 7.14371e-06 |
+|    clip_fraction                   | 0           |
+|    clip_range                      | 0.2         |
+|    entropy_loss                    | -1.95       |
+|    explained_variance              | -0.116      |
+|    learning_rate                   | 5e-05       |
+|    loss                            | 0.0205      |
+|    n_updates                       | 10          |
+|    policy_gradient_loss            | -0.000408   |
+|    value_loss                      | 0.0514      |
+----------------------------------------------------
+(D:\anaconda\envs_dirs\causal_hrl) PS D:\Project\HRC_granularity> python -m rl.train_sb3_gc_ppo --env_id MiniGrid-Fetch-8x8-N3-v0 --module_name smoke_g1_pickup --parent_goal near_target --child_goal has_target --total_timesteps 512 --n_envs 1 --seed 0 --logdir runs_granularity --run_name smoke_g1_fetch
+D:\anaconda\envs_dirs\causal_hrl\lib\site-packages\pygame\pkgdata.py:25: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_stream, resource_exists
+TRAINING_MODE: edge
+MODULE_NAME: smoke_g1_pickup
+PARENT_GOAL: near_target
+CHILD_GOAL: has_target
+EDGE_GOAL_POOL_MODE: child_only
+STRICT_PARENT_MODE: True
+STRICT_PARENT_FAIL_FAST: True
+STRICT_RESET_MAX_TRIES: 128
+GOALS: ['has_target']
+USE_PRECONDITION_DO: True
+[ckpt] every ~10000 calls (~10000 timesteps)
+Using cpu device
+D:\anaconda\envs_dirs\causal_hrl\lib\site-packages\stable_baselines3\ppo\ppo.py:155: UserWarning: You have specified a mini-batch size of 1024, but because the `RolloutBuffer` is of size `n_steps * n_envs = 256`, after every 0 untruncated mini-batches, there will be a truncated mini-batch of size 256
+We recommend using a `batch_size` that is a factor of `n_steps * n_envs`.
+Info: (n_steps=256 and n_envs=1)
+  warnings.warn(
+Logging to runs_granularity\smoke_g1_fetch\smoke_g1_fetch_1
+-------------------------------------------------
+| debug/                             |          |
+|    front_door_e                    | 0        |
+|    front_door_s                    | 0        |
+|    front_door_w                    | 0        |
+|    front_step_e                    | 0        |
+|    front_step_s                    | 0        |
+|    front_step_w                    | 0        |
+|    front_tgt_e                     | 1        |
+|    front_tgt_s                     | 0        |
+|    front_tgt_w                     | 0.148    |
+|    parent_fail_e                   | 1        |
+|    parent_fail_s                   | 1        |
+|    parent_fail_w                   | 1        |
+|    pickup_any_e                    | 1        |
+|    pickup_any_s                    | 1        |
+|    pickup_any_w                    | 0.593    |
+|    pickup_cnt_e                    | 1        |
+|    pickup_cnt_s                    | 3        |
+|    pickup_cnt_w                    | 1.26     |
+|    pickup_front_e                  | 0        |
+|    pickup_front_s                  | 0        |
+|    pickup_front_w                  | 0.0741   |
+|    seen_door_e                     | 0        |
+|    seen_door_s                     | 0        |
+|    seen_door_w                     | 0        |
+|    seen_step_e                     | 0        |
+|    seen_step_s                     | 0        |
+|    seen_step_w                     | 0        |
+|    seen_tgt_e                      | 1        |
+|    seen_tgt_s                      | 1        |
+|    seen_tgt_w                      | 0.778    |
+|    toggle_any_e                    | 1        |
+|    toggle_any_s                    | 1        |
+|    toggle_any_w                    | 0.593    |
+|    toggle_cnt_e                    | 2        |
+|    toggle_cnt_s                    | 2        |
+|    toggle_cnt_w                    | 1.15     |
+|    toggle_front_e                  | 0        |
+|    toggle_front_s                  | 0        |
+|    toggle_front_w                  | 0        |
+| diag/                              |          |
+|    has_target/ever_target_front    | 0.148    |
+|    has_target/ever_target_seen     | 0.778    |
+|    has_target/pickup_attempt_count | 1.26     |
+|    has_target/pickup_attempt_front | 0.0741   |
+|    has_target/pickup_attempted     | 0.593    |
+| goal_success/                      |          |
+|    has_target                      | 0.222    |
+| rollout/                           |          |
+|    ep_len_mean                     | 8.7      |
+|    ep_rew_mean                     | 0.222    |
+|    success_rate                    | 0.222    |
+| time/                              |          |
+|    fps                             | 386      |
+|    iterations                      | 1        |
+|    time_elapsed                    | 0        |
+|    total_timesteps                 | 256      |
+-------------------------------------------------
+------------------------------------------------------
+| debug/                             |               |
+|    front_door_e                    | 0             |
+|    front_door_s                    | 0             |
+|    front_door_w                    | 0             |
+|    front_step_e                    | 0             |
+|    front_step_s                    | 0             |
+|    front_step_w                    | 0             |
+|    front_tgt_e                     | 0             |
+|    front_tgt_s                     | 0             |
+|    front_tgt_w                     | 0.135         |
+|    parent_fail_e                   | 1             |
+|    parent_fail_s                   | 1             |
+|    parent_fail_w                   | 1             |
+|    pickup_any_e                    | 1             |
+|    pickup_any_s                    | 1             |
+|    pickup_any_w                    | 0.615         |
+|    pickup_cnt_e                    | 2             |
+|    pickup_cnt_s                    | 1             |
+|    pickup_cnt_w                    | 1.37          |
+|    pickup_front_e                  | 0             |
+|    pickup_front_s                  | 0             |
+|    pickup_front_w                  | 0.0769        |
+|    seen_door_e                     | 0             |
+|    seen_door_s                     | 0             |
+|    seen_door_w                     | 0             |
+|    seen_step_e                     | 0             |
+|    seen_step_s                     | 0             |
+|    seen_step_w                     | 0             |
+|    seen_tgt_e                      | 1             |
+|    seen_tgt_s                      | 1             |
+|    seen_tgt_w                      | 0.827         |
+|    toggle_any_e                    | 0             |
+|    toggle_any_s                    | 1             |
+|    toggle_any_w                    | 0.577         |
+|    toggle_cnt_e                    | 0             |
+|    toggle_cnt_s                    | 1             |
+|    toggle_cnt_w                    | 1.38          |
+|    toggle_front_e                  | 0             |
+|    toggle_front_s                  | 0             |
+|    toggle_front_w                  | 0             |
+| diag/                              |               |
+|    has_target/ever_target_front    | 0.135         |
+|    has_target/ever_target_seen     | 0.827         |
+|    has_target/pickup_attempt_count | 1.37          |
+|    has_target/pickup_attempt_front | 0.0769        |
+|    has_target/pickup_attempted     | 0.615         |
+| goal_success/                      |               |
+|    has_target                      | 0.231         |
+| rollout/                           |               |
+|    ep_len_mean                     | 9.67          |
+|    ep_rew_mean                     | 0.231         |
+|    success_rate                    | 0.231         |
+| time/                              |               |
+|    fps                             | 318           |
+|    iterations                      | 2             |
+|    time_elapsed                    | 1             |
+|    total_timesteps                 | 512           |
+| train/                             |               |
+|    approx_kl                       | 1.0975171e-05 |
+|    clip_fraction                   | 0             |
+|    clip_range                      | 0.2           |
+|    entropy_loss                    | -1.95         |
+|    explained_variance              | -0.00118      |
+|    learning_rate                   | 5e-05         |
+|    loss                            | 0.0475        |
+|    n_updates                       | 10            |
+|    policy_gradient_loss            | -0.000497     |
+|    value_loss                      | 0.113         |
+------------------------------------------------------

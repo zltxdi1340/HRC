@@ -1,0 +1,40 @@
+{"name": "M1_UnlockDoor", "parent": "has_key", "child": "door_open"},
+BabyAI-UnlockLocal-v0、BabyAI-KeyInBox-v0、MiniGrid-DoorKey-6x6-v0、MiniGrid-UnlockPickup-v0
+{"name": "M2_Pickup", "parent": "near_obj", "child": "has_obj"},
+BabyAI-Pickup-v0、MiniGrid-Fetch-8x8-N3-v0
+{"name": "M3_OpenBoxKey", "parent": "open_box", "child": "has_key"},
+BabyAI-KeyInBox-v0
+{"name": "M4_DoorToBox", "parent": "door_open", "child": "has_box"},
+MiniGrid-UnlockPickup-v0
+{"name": "M5_DoorToGoal", "parent": "door_open", "child": "at_goal"}
+MiniGrid-DoorKey-6x6-v0
+
+
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-DoorKey-6x6-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --total_timesteps 20000   --seed 0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-Fetch-8x8-N3-v0   --module_name M2_Pickup   --parent_goal near_obj   --child_goal has_obj   --edge_goal_pool_mode child_only   --total_timesteps 20000   --seed 0
+python -m rl.train_sb3_gc_ppo   --env_id BabyAI-KeyInBox-v0   --module_name M3_OpenBoxKey   --parent_goal open_box   --child_goal has_key   --edge_goal_pool_mode child_only   --total_timesteps 180000   --seed 0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-UnlockPickup-v0   --module_name M4_DoorToBox   --parent_goal door_open   --child_goal has_box   --edge_goal_pool_mode child_only   --total_timesteps 180000   --seed 0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-DoorKey-6x6-v0   --module_name M5_DoorToGoal   --parent_goal door_open   --child_goal at_goal   --edge_goal_pool_mode child_only   --total_timesteps 150000   --seed 0
+
+{"name": "A0_OpenBox", "goal": "open_box"},
+BabyAI-KeyInBox-v0
+{"name": "A1_AcquireKey", "goal": "has_key"},
+MiniGrid-UnlockPickup-v0、BabyAI-UnlockLocal-v0、MiniGrid-DoorKey-6x6-v0
+{"name": "A2_ApproachObj", "goal": "near_obj"},
+BabyAI-Pickup-v0、MiniGrid-Fetch-8x8-N3-v0、MiniGrid-GoToObject-8x8-N2-v0
+{"name": "A3_ReachGoal", "goal": "at_goal"}
+MiniGrid-Empty-8x8-v0、MiniGrid-FourRooms-v0
+
+先训 4 个 M1 专家
+python -m rl.train_sb3_gc_ppo   --env_id BabyAI-UnlockLocal-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 150000   --seed 0   --run_name M1_E_unlocklocal_s0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-DoorKey-6x6-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 150000   --seed 0   --run_name M1_E_doorkey_s0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-UnlockPickup-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 180000   --seed 0   --strict_reset_max_tries 128   --run_name M1_E_unlockpickup_s0
+python -m rl.train_sb3_gc_ppo   --env_id BabyAI-KeyInBox-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 180000   --seed 0   --strict_reset_max_tries 128   --run_name M1_E_keyinbox_s0
+
+做一个顺序微调聚合模型：UnlockLocal → DoorKey → UnlockPickup → KeyInBox
+python -m rl.train_sb3_gc_ppo   --env_id BabyAI-UnlockLocal-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 150000   --seed 0   --run_name M1_SEQ_step1_unlocklocal_s0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-DoorKey-6x6-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 80000   --seed 0   --load_model runs_gcppo/M1_SEQ_step1_unlocklocal_s0/BabyAI-UnlockLocal-v0_final.zip   --run_name M1_SEQ_step2_doorkey_s0
+python -m rl.train_sb3_gc_ppo   --env_id MiniGrid-UnlockPickup-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 100000   --seed 0   --strict_reset_max_tries 128   --load_model runs_gcppo/M1_SEQ_step2_doorkey_s0/MiniGrid-DoorKey-6x6-v0_final.zip   --run_name M1_SEQ_step3_unlockpickup_s0
+python -m rl.train_sb3_gc_ppo   --env_id BabyAI-KeyInBox-v0   --module_name M1_UnlockDoor   --parent_goal has_key   --child_goal door_open   --edge_goal_pool_mode child_only   --option_horizon 256   --total_timesteps 100000   --seed 0   --strict_reset_max_tries 128   --load_model runs_gcppo/M1_SEQ_step3_unlockpickup_s0/MiniGrid-UnlockPickup-v0_final.zip   --run_name M1_SEQ_step4_keyinbox_s0
+这个 M1_SEQ_step4_keyinbox_s0 就是聚合模块
+

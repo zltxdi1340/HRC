@@ -81,6 +81,8 @@ def run_g2_module(env: G2TemplateEnv, model: PPO, module: G2ModuleSpec, determin
                 "pickup_attempts": 0,
                 "drop_attempts": 0,
                 "toggle_attempts": 0,
+                "carrying_key": 0.0,
+                "carrying_target": 0.0,
             }
 
     obs = env.encode_current_obs()
@@ -91,6 +93,7 @@ def run_g2_module(env: G2TemplateEnv, model: PPO, module: G2ModuleSpec, determin
     for _ in range(int(module.horizon)):
         action, _ = model.predict(obs, deterministic=deterministic)
         obs, reward, terminated, truncated, info = env.step(action)
+        last_info = info
         steps += 1
 
         if check == "door_ready":
@@ -117,6 +120,8 @@ def run_g2_module(env: G2TemplateEnv, model: PPO, module: G2ModuleSpec, determin
         "pickup_attempts": int(last_info.get("debug_g2_pickup_attempt_count", 0)),
         "drop_attempts": int(last_info.get("debug_g2_drop_attempt_count", 0)),
         "toggle_attempts": int(last_info.get("debug_g2_toggle_attempt_count", 0)),
+        "carrying_key": float(last_info.get("debug_g2_carrying_key", 0.0)),
+        "carrying_target": float(last_info.get("debug_g2_carrying_target", 0.0)),
     }
 
 
@@ -149,6 +154,8 @@ def evaluate_g2_chain(spec: G2ChainSpec, episodes: int, seed: int, deterministic
     module_pickup_attempts: Dict[str, List[float]] = {m.name: [] for m in spec.modules}
     module_drop_attempts: Dict[str, List[float]] = {m.name: [] for m in spec.modules}
     module_toggle_attempts: Dict[str, List[float]] = {m.name: [] for m in spec.modules}
+    module_carrying_key = {m.name: [] for m in spec.modules}
+    module_carrying_target = {m.name: [] for m in spec.modules}
 
     for ep in range(episodes):
         env.reset(seed=seed + ep)
@@ -163,6 +170,8 @@ def evaluate_g2_chain(spec: G2ChainSpec, episodes: int, seed: int, deterministic
             module_pickup_attempts[m.name].append(float(r.get("pickup_attempts", 0)))
             module_drop_attempts[m.name].append(float(r.get("drop_attempts", 0)))
             module_toggle_attempts[m.name].append(float(r.get("toggle_attempts", 0)))
+            module_carrying_key[m.name].append(float(r.get("carrying_key", 0.0)))
+            module_carrying_target[m.name].append(float(r.get("carrying_target", 0.0)))
             total_steps += int(r["steps"])
 
             if float(r["success"]) < 1.0:
@@ -197,6 +206,8 @@ def evaluate_g2_chain(spec: G2ChainSpec, episodes: int, seed: int, deterministic
         out[f"module_pickup_attempts/{m.name}"] = float(np.mean(module_pickup_attempts[m.name]))
         out[f"module_drop_attempts/{m.name}"] = float(np.mean(module_drop_attempts[m.name]))
         out[f"module_toggle_attempts/{m.name}"] = float(np.mean(module_toggle_attempts[m.name]))
+        out[f"module_carrying_key/{m.name}"] = float(np.mean(module_carrying_key[m.name]))
+        out[f"module_carrying_target/{m.name}"] = float(np.mean(module_carrying_target[m.name]))
 
     return out
 

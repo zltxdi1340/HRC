@@ -463,8 +463,8 @@ class G2TemplateEnv(gym.Wrapper):
         if mapped_action == self._pickup_action_id:
             self._pickup_attempts += 1
         
-        if mapped_action == self._toggle_action_id:
-            self._toggle_attempts += 1
+        if mapped_action == self._drop_action_id:
+            self._drop_attempts += 1
 
         if mapped_action == self._toggle_action_id:
             self._toggle_attempts += 1

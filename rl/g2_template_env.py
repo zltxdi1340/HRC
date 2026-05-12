@@ -257,6 +257,7 @@ class G2TemplateEnv(gym.Wrapper):
         # diagnostics
         self._template_success_once = False
         self._pickup_attempts = 0
+        self._drop_attempts = 0
         self._toggle_attempts = 0
         self._door_ready_once = False
         self._target_front_once = False
@@ -435,6 +436,7 @@ class G2TemplateEnv(gym.Wrapper):
 
         self._template_success_once = bool(self._prev_success_val)
         self._pickup_attempts = 0
+        self._drop_attempts = 0
         self._toggle_attempts = 0
         self._door_ready_once = bool(_door_in_front(self.env))
         obj, color = self._target_obj_color()
@@ -460,6 +462,10 @@ class G2TemplateEnv(gym.Wrapper):
 
         if mapped_action == self._pickup_action_id:
             self._pickup_attempts += 1
+        
+        if mapped_action == self._toggle_action_id:
+            self._toggle_attempts += 1
+
         if mapped_action == self._toggle_action_id:
             self._toggle_attempts += 1
 
@@ -476,6 +482,16 @@ class G2TemplateEnv(gym.Wrapper):
         if self._t >= self.option_horizon:
             truncated = True
 
+        carrying = getattr(self.env.unwrapped, "carrying", None)
+        carrying_type = getattr(carrying, "type", None)
+        carrying_color = getattr(carrying, "color", None)
+
+        info["debug_g2_carrying_key"] = float(carrying_type == "key")
+        info["debug_g2_carrying_target"] = float(
+            carrying_type == self._goal.target_obj
+            and (self._goal.target_color == "grey" or carrying_color == self._goal.target_color)
+        )
+
         info = dict(info)
         info["g2_template"] = self.template
         info["mapped_action"] = int(mapped_action)
@@ -486,6 +502,7 @@ class G2TemplateEnv(gym.Wrapper):
         info["debug_g2_door_ready_once"] = float(self._door_ready_once)
         info["debug_g2_target_front_once"] = float(self._target_front_once)
         info["debug_g2_pickup_attempt_count"] = int(self._pickup_attempts)
+        info["debug_g2_drop_attempt_count"] = int(self._drop_attempts)
         info["debug_g2_toggle_attempt_count"] = int(self._toggle_attempts)
 
         return self._encode_obs(obs), reward, terminated, truncated, info
